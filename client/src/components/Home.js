@@ -156,16 +156,6 @@ const Home = ({ user, logout }) => {
     );
   }, []);
 
-  const sortMessages = useCallback((data) => {
-    for (let conversation of data) {
-      const unsortedMessages = [...conversation.messages];
-      conversation.messages = unsortedMessages.sort((a, b) => {
-        return new Date(a.createdAt) - new Date(b.createdAt);
-      });
-    }
-    return data;
-  }, []);
-
   // Lifecycle
 
   useEffect(() => {
@@ -200,8 +190,10 @@ const Home = ({ user, logout }) => {
     const fetchConversations = async () => {
       try {
         const { data } = await axios.get("/api/conversations");
-        const sortedData = sortMessages(data);
-        setConversations(sortedData);
+        for (let conversation of data) {
+          conversation.messages.reverse();
+        }
+        setConversations(data);
       } catch (error) {
         console.error(error);
       }
@@ -209,7 +201,7 @@ const Home = ({ user, logout }) => {
     if (!user.isFetching) {
       fetchConversations();
     }
-  }, [user, sortMessages]);
+  }, [user]);
 
   const handleLogout = async () => {
     if (user && user.id) {
