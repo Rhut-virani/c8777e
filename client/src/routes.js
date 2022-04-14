@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Route, Switch, withRouter } from "react-router-dom";
 
-import Signup from "./components/LoginSignup/Signup.js";
-import Login from "./components/LoginSignup/Login.js";
+import Signup from "./components/Auth/Signup.js";
+import Login from "./components/Auth/Login.js";
 import { SnackbarError, Home } from "./components";
 import { SocketContext, socket } from "./context/socket";
-import LoginSignupWrapper from "./components/LoginSignupWrapper.js";
+import AuthWrapper from "./components/AuthWrapper.js";
 
 const Routes = (props) => {
   const [user, setUser] = useState({
@@ -101,17 +101,17 @@ const Routes = (props) => {
         <Route
           path="/login"
           render={() => (
-            <LoginSignupWrapper isLogin={true}>
+            <AuthWrapper isLogin={true}>
               <Login user={user} login={login} />
-            </LoginSignupWrapper>
+            </AuthWrapper>
           )}
         />
         <Route
           path="/register"
           render={() => (
-            <LoginSignupWrapper isLogin={false}>
+            <AuthWrapper isLogin={false}>
               <Signup user={user} register={register} />
-            </LoginSignupWrapper>
+            </AuthWrapper>
           )}
         />
         <Route
@@ -121,7 +121,9 @@ const Routes = (props) => {
             user?.id ? (
               <Home user={user} logout={logout} />
             ) : (
-              <Signup user={user} register={register} />
+              <AuthWrapper isLogin={false}>
+                <Signup user={user} register={register} />
+              </AuthWrapper>
             )
           }
         />
