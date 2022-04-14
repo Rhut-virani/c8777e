@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  TextField,
-  FormHelperText,
-} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { Grid, Typography, Button, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  button: {
+    padding: '1rem 3rem',
+    marginTop: '2rem',
+    boxShadow: '0px 4px 4px rgba(88, 133, 196, 0.15)',
+  },
+  greetings: {
+    fontWeight: 600,
+  },
+}));
 
 const Signup = ({ user, register }) => {
+  const classes = useStyles();
+
   const history = useHistory();
 
   const [formErrorMessage, setFormErrorMessage] = useState({});
@@ -36,75 +42,90 @@ const Signup = ({ user, register }) => {
   }, [user, history]);
 
   return (
-    <Grid container justifyContent="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to log in?</Typography>
-          <Link href="/login" to="/login">
-            <Button>Login</Button>
-          </Link>
-        </Grid>
+    <>
+      <Grid
+        container
+        item
+        justifyContent="center"
+        alignItems="center"
+        xs={8}
+        sm={6}
+      >
         <form onSubmit={handleRegister}>
-          <Grid>
-            <Grid>
-              <FormControl>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                  required
-                />
-              </FormControl>
+          <Typography variant="h5" gutterBottom className={classes.greetings}>
+            Create an account.
+          </Typography>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            spacing={3}
+          >
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                aria-label="username"
+                label="Username"
+                name="username"
+                type="text"
+                autoComplete="username"
+                required
+              />
             </Grid>
-            <Grid>
-              <FormControl>
-                <TextField
-                  label="E-mail address"
-                  aria-label="e-mail address"
-                  type="email"
-                  name="email"
-                  required
-                />
-              </FormControl>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="E-mail address"
+                aria-label="e-mail address"
+                type="email"
+                name="email"
+                required
+                autoComplete="email"
+              />
             </Grid>
-            <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
-                <TextField
-                  aria-label="password"
-                  label="Password"
-                  type="password"
-                  inputProps={{ minLength: 6 }}
-                  name="password"
-                  required
-                />
-                <FormHelperText>
-                  {formErrorMessage.confirmPassword}
-                </FormHelperText>
-              </FormControl>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                aria-label="password"
+                label="Password"
+                type="password"
+                inputProps={{ minLength: 6 }}
+                name="password"
+                required
+                autoComplete="new-password"
+                error={!!formErrorMessage.confirmPassword}
+                helperText={formErrorMessage.confirmPassword}
+              />
             </Grid>
-            <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
-                <TextField
-                  label="Confirm Password"
-                  aria-label="confirm password"
-                  type="password"
-                  inputProps={{ minLength: 6 }}
-                  name="confirmPassword"
-                  required
-                />
-                <FormHelperText>
-                  {formErrorMessage.confirmPassword}
-                </FormHelperText>
-              </FormControl>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Confirm Password"
+                aria-label="confirm password"
+                type="password"
+                inputProps={{ minLength: 6 }}
+                name="confirmPassword"
+                required
+                autoComplete="new-password"
+                error={!!formErrorMessage.confirmPassword}
+                helperText={formErrorMessage.confirmPassword}
+              />
             </Grid>
-            <Button type="submit" variant="contained" size="large">
-              Create
-            </Button>
+            <Grid container item xs={12} justifyContent="center">
+              <Button
+                color="primary"
+                type="submit"
+                variant="contained"
+                size="large"
+                className={classes.button}
+              >
+                Create
+              </Button>
+            </Grid>
           </Grid>
         </form>
-      </Box>
-    </Grid>
+      </Grid>
+    </>
   );
 };
 

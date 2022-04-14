@@ -1,15 +1,22 @@
 import React, { useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  TextField,
-} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { Grid, Typography, Button, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles(() => ({
+  button: {
+    padding: '1rem 3rem',
+    marginTop: '2rem',
+
+    boxShadow: '0px 4px 4px rgba(88, 133, 196, 0.15)',
+  },
+  greetings: {
+    fontWeight: 600,
+  },
+}));
 const Login = ({ user, login }) => {
+  const classes = useStyles();
+
   const history = useHistory();
 
   const handleLogin = async (event) => {
@@ -27,43 +34,64 @@ const Login = ({ user, login }) => {
   }, [user, history]);
 
   return (
-    <Grid container justifyContent="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Link href="/register" to="/register">
-            <Button>Register</Button>
-          </Link>
-        </Grid>
+    <>
+      <Grid
+        container
+        item
+        justifyContent="center"
+        alignItems="center"
+        xs={8}
+        sm={6}
+      >
         <form onSubmit={handleLogin}>
-          <Grid>
-            <Grid>
-              <FormControl margin="normal" required>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                />
-              </FormControl>
-            </Grid>
-            <FormControl margin="normal" required>
+          <Typography variant="h5" gutterBottom className={classes.greetings}>
+            Welcome Back!
+          </Typography>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            spacing={4}
+          >
+            <Grid item xs={12}>
               <TextField
-                label="password"
+                fullWidth
+                margin="normal"
+                aria-label="username"
+                label="Username"
+                name="username"
+                type="text"
+                required
+                autoComplete="username"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Password"
                 aria-label="password"
                 type="password"
                 name="password"
+                required
+                autoComplete="new-password"
               />
-            </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
+            </Grid>
+            <Grid container item xs={12} justifyContent="center">
+              <Button
+                color="primary"
+                type="submit"
+                variant="contained"
+                size="large"
+                className={classes.button}
+              >
                 Login
               </Button>
             </Grid>
           </Grid>
         </form>
-      </Box>
-    </Grid>
+      </Grid>
+    </>
   );
 };
 
