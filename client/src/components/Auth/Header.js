@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({ text }) => {
+const Header = ({ text, linkText }) => {
   const classes = useStyles();
 
   return (
@@ -45,15 +45,15 @@ const Header = ({ text }) => {
         alignItems="center"
         className={classes.headerWrapper}
       >
-        <Typography className={classes.headerText}>Need to {text}?</Typography>
-        <Link to={`/${text.toLowerCase()}`} className={classes.headerLink}>
+        <Typography className={classes.headerText}>{text}</Typography>
+        <Link to={`/${linkText.toLowerCase()}`} className={classes.headerLink}>
           <Button
             color="secondary"
             variant="contained"
             size="large"
             className={classes.headerButton}
           >
-            {text}
+            {linkText}
           </Button>
         </Link>
       </Grid>

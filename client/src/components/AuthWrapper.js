@@ -24,7 +24,10 @@ const AuthWrapper = ({ children, isLogin }) => {
         xs={12}
         md={8}
       >
-        <Header text={isLogin ? "Register" : "Login"} />
+        <Header
+          linkText={isLogin ? "Register" : "Login"}
+          text={isLogin ? "Don’t have an account?" : "Already have an account?"}
+        />
         {children}
       </Grid>
     </Grid>
