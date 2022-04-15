@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Grid, Typography, Button, TextField } from '@material-ui/core';
+import { Grid, Typography, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import CustomButton from './CustomButton';
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -78,15 +79,11 @@ const Login = ({ user, login }) => {
               />
             </Grid>
             <Grid container item xs={12} justifyContent="center">
-              <Button
-                color="primary"
-                type="submit"
-                variant="contained"
-                size="large"
-                className={classes.button}
-              >
-                Login
-              </Button>
+              <CustomButton
+                color={'primary'}
+                isForm={true}
+                buttonText={'Login'}
+              />
             </Grid>
           </Grid>
         </form>

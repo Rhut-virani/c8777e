@@ -1,7 +1,8 @@
 import React from "react";
-import { Grid, Typography, Button } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import CustomButton from "./CustomButton";
 
 const useStyles = makeStyles((theme) => ({
   headerWrapper: {
@@ -21,16 +22,6 @@ const useStyles = makeStyles((theme) => ({
   headerLink: {
     textDecoration: "none",
   },
-  headerButton: {
-    padding: "1rem 3rem",
-    boxShadow: "0px 4px 4px rgba(88, 133, 196, 0.15)",
-    "&:hover": {
-      backgroundColor: "#ffffff",
-    },
-    [theme.breakpoints.down("sm")]: {
-      padding: "0.5rem 1rem",
-    },
-  },
 }));
 
 const Header = ({ text, linkText }) => {
@@ -47,14 +38,11 @@ const Header = ({ text, linkText }) => {
       >
         <Typography className={classes.headerText}>{text}</Typography>
         <Link to={`/${linkText.toLowerCase()}`} className={classes.headerLink}>
-          <Button
-            color="secondary"
-            variant="contained"
-            size="large"
-            className={classes.headerButton}
-          >
-            {linkText}
-          </Button>
+          <CustomButton
+            color={"secondary"}
+            isForm={false}
+            buttonText={linkText}
+          />
         </Link>
       </Grid>
     </>
