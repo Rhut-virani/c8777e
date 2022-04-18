@@ -1,5 +1,12 @@
-import React, { useState } from 'react';
-import { FormControl, FilledInput } from '@material-ui/core';
+import React from 'react';
+import {
+  FormControl,
+  FilledInput,
+  InputAdornment,
+  IconButton,
+} from '@material-ui/core';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+import SendIcon from '@material-ui/icons/Send';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
@@ -13,33 +20,22 @@ const useStyles = makeStyles(() => ({
     borderRadius: 8,
     marginBottom: 20,
   },
+  hiddenInput: {
+    display: 'none',
+  },
 }));
 
-const Input = ({ otherUser, conversationId, user, postMessage }) => {
+const Input = ({
+  uploadURL,
+  text,
+  handleChange,
+  handleSubmit,
+  handleUpload,
+}) => {
   const classes = useStyles();
-  const [text, setText] = useState('');
-
-  const handleChange = (event) => {
-    setText(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const formElements = form.elements;
-    // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
-    const reqBody = {
-      text: formElements.text.value,
-      recipientId: otherUser.id,
-      conversationId,
-      sender: conversationId ? null : user,
-    };
-    await postMessage(reqBody);
-    setText('');
-  };
 
   return (
-    <form className={classes.root} onSubmit={handleSubmit}>
+    <form className={classes.root} onSubmit={handleSubmit} id="submit-form">
       <FormControl fullWidth hiddenLabel>
         <FilledInput
           classes={{ root: classes.input }}
@@ -48,6 +44,36 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
           value={text}
           name="text"
           onChange={handleChange}
+          startAdornment={
+            <InputAdornment position="start">
+              <input
+                accept="image/*"
+                className={classes.hiddenInput}
+                id="contained-button-file"
+                multiple
+                type="file"
+                onChange={(e) => {
+                  handleUpload(e);
+                }}
+              />
+              <label htmlFor="contained-button-file">
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <PhotoCameraIcon />
+                </IconButton>
+              </label>
+            </InputAdornment>
+          }
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton type="submit" color="primary">
+                <SendIcon />
+              </IconButton>
+            </InputAdornment>
+          }
         />
       </FormControl>
     </form>

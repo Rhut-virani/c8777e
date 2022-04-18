@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 import { Input, Header, Messages } from './index';
+import { uploadImages } from './helper';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -24,18 +25,47 @@ const ActiveChat = ({
   conversations,
   activeConversation,
   postMessage,
-  logout
 }) => {
   const classes = useStyles();
+  const [text, setText] = useState('');
+  const [uploadURL, setUploadURL] = useState([]);
 
   const conversation = conversations
     ? conversations.find(
-        (conversation) => conversation.otherUser.username === activeConversation
+        (conversation) =>
+          conversation.otherUser.username === activeConversation,
       )
     : {};
 
   const isConversation = (obj) => {
     return obj !== {} && obj !== undefined;
+  };
+
+  const handleChange = (event) => {
+    setText(event.target.value);
+  };
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    const uploadedUrls = await uploadImages(e);
+    setUploadURL(uploadedUrls);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(event.currentTarget);
+    const form = event.currentTarget;
+    const formElements = form.elements;
+    // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
+    const reqBody = {
+      text: formElements.text.value,
+      recipientId: conversation.otherUser.id,
+      conversationId: conversation.id,
+      sender: conversation.id ? null : user,
+      attachments: uploadURL,
+    };
+    await postMessage(reqBody);
+    setText('');
   };
 
   return (
@@ -45,7 +75,6 @@ const ActiveChat = ({
           <Header
             username={conversation.otherUser.username}
             online={conversation.otherUser.online || false}
-            logout={logout}
           />
           <Box className={classes.chatContainer}>
             {user && (
@@ -56,10 +85,12 @@ const ActiveChat = ({
                   userId={user.id}
                 />
                 <Input
-                  otherUser={conversation.otherUser}
-                  conversationId={conversation.id || null}
                   user={user}
-                  postMessage={postMessage}
+                  handleChange={handleChange}
+                  handleSubmit={handleSubmit}
+                  handleUpload={handleUpload}
+                  uploadURL={uploadURL}
+                  text={text}
                 />
               </>
             )}
