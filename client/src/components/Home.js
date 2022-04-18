@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { Grid, CssBaseline, Button } from "@material-ui/core";
+import { Grid, CssBaseline} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { SidebarContainer } from "../components/Sidebar";
@@ -211,7 +211,6 @@ const Home = ({ user, logout }) => {
 
   return (
     <>
-      <Button onClick={handleLogout}>Logout</Button>
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <SidebarContainer
@@ -220,6 +219,7 @@ const Home = ({ user, logout }) => {
           clearSearchedUsers={clearSearchedUsers}
           addSearchedUsers={addSearchedUsers}
           setActiveChat={setActiveChat}
+          logout={handleLogout}
         />
         <ActiveChat
           activeConversation={activeConversation}

@@ -24,6 +24,7 @@ const ActiveChat = ({
   conversations,
   activeConversation,
   postMessage,
+  logout
 }) => {
   const classes = useStyles();
 
@@ -44,6 +45,7 @@ const ActiveChat = ({
           <Header
             username={conversation.otherUser.username}
             online={conversation.otherUser.online || false}
+            logout={logout}
           />
           <Box className={classes.chatContainer}>
             {user && (
