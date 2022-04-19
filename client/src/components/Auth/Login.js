@@ -22,7 +22,7 @@ const Login = ({ user, login }) => {
   }, [user, history]);
 
   return (
-    <AuthForm handleSubmit={handleLogin} greetingsText={'Welcome Back!'}>
+    <AuthForm handleSubmit={handleLogin} greetingsText={'Welcome Back!'} buttonText={'Login'}>
       <Grid item xs={12}>
         <TextField
           fullWidth

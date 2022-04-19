@@ -6,15 +6,14 @@ import CustomButton from "./CustomButton";
 
 const useStyles = makeStyles((theme) => ({
   headerWrapper: {
-    padding: "0 4rem",
-    height: "20%",
+    padding: "1.875rem 2.625rem 0 0",
     [theme.breakpoints.down("sm")]: {
       justifyContent: "space-evenly",
-      padding: "0",
     },
   },
   headerText: {
-    margin: "0 4rem",
+    fontSize: "0.875rem",
+    margin: "0 1.875rem",
     color: "#B0B0B0",
     [theme.breakpoints.down("sm")]: {
       margin: "0 1rem",
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({ text, linkText }) => {
+const Header = ({ text, linkText, link }) => {
   const classes = useStyles();
 
   return (
@@ -38,7 +37,7 @@ const Header = ({ text, linkText }) => {
         className={classes.headerWrapper}
       >
         <Typography className={classes.headerText}>{text}</Typography>
-        <Link to={`/${linkText.toLowerCase()}`} className={classes.headerLink}>
+        <Link to={link} className={classes.headerLink}>
           <CustomButton
             color={"secondary"}
             isForm={false}

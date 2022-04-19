@@ -31,7 +31,7 @@ const Signup = ({ user, register }) => {
   }, [user, history]);
 
   return (
-    <AuthForm handleSubmit={handleRegister} greetingsText={"Create an account."}>
+    <AuthForm handleSubmit={handleRegister} greetingsText={'Create an account.'} buttonText={'Create'}>
       <Grid item xs={12}>
         <TextField
           fullWidth

@@ -3,22 +3,32 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    padding: '1rem 3rem',
-    marginTop: (props) => (props.isForm ? '2rem' : '0'),
+  formButton: {
+    minWidth: '160px',
+    minHeight: '3.5rem',
+    marginTop: '2rem',
     boxShadow: '0px 4px 4px rgba(88, 133, 196, 0.15)',
     '&:hover': {
-      backgroundColor: (props) => (props.isForm ? '#295591' : '#ffffff'),
+      backgroundColor: '#295591',
     },
-    [theme.breakpoints.down('sm')]: {
-      padding: (props) => (props.isForm ? '1rem 3rem' : '1rem 1.5rem'),
+    fontSize: '1rem',
+    fontWeight: 700,
+  },
+  headerButton: {
+    minWidth: '140px',
+    padding: '0 2rem',
+    minHeight: '3.375rem',
+    boxShadow: '0px 4px 4px rgba(88, 133, 196, 0.15)',
+    '&:hover': {
+      backgroundColor: '#ffffff',
     },
+    fontSize: '0.875rem',
+    fontWeight: 600,
   },
 }));
 
-const CustomButton = (props) => {
-  const { buttonText, color, isForm } = props;
-  const classes = useStyles(props);
+const CustomButton = ({ buttonText, color, isForm }) => {
+  const classes = useStyles();
 
   return (
     <Button
@@ -26,7 +36,7 @@ const CustomButton = (props) => {
       variant="contained"
       size="large"
       type={isForm ? 'submit' : 'button'}
-      className={classes.button}
+      className={isForm ? classes.formButton : classes.headerButton}
     >
       {buttonText}
     </Button>

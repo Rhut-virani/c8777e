@@ -3,13 +3,24 @@ import React from 'react';
 import CustomButton from './CustomButton';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+  formWrapper: {
+    minWidth: '23.75rem',
+    minHeight: '22.375rem',
+    alignContent: 'center',
+    marginRight: '1.5rem',
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '50%',
+    },
+  },
   greetings: {
     fontWeight: 600,
+    fontSize: '1.625rem',
+    marginLeft: '0.5rem',
   },
 }));
 
-const AuthForm = ({ children, handleSubmit, greetingsText }) => {
+const AuthForm = ({ children, handleSubmit, greetingsText, buttonText }) => {
   const classes = useStyles();
 
   return (
@@ -20,18 +31,19 @@ const AuthForm = ({ children, handleSubmit, greetingsText }) => {
       alignItems="center"
       xs={8}
       sm={6}
+      className={classes.formWrapper}
     >
       <form onSubmit={handleSubmit}>
-        <Typography variant="h5" gutterBottom className={classes.greetings}>
-          {greetingsText}
-        </Typography>
-        <Grid container justifyContent="center" alignItems="center" spacing={3}>
+        <Grid container alignItems="center" spacing={3}>
+          <Typography variant="h5" className={classes.greetings}>
+            {greetingsText}
+          </Typography>
           {children}
           <Grid container item xs={12} justifyContent="center">
             <CustomButton
               color={'primary'}
               isForm={true}
-              buttonText={'Create'}
+              buttonText={buttonText}
             />
           </Grid>
         </Grid>
