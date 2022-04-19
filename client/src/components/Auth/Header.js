@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   headerText: {
     margin: "0 4rem",
+    color: "#B0B0B0",
     [theme.breakpoints.down("sm")]: {
       margin: "0 1rem",
     },
