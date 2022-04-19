@@ -24,18 +24,17 @@ const Sidebar = ({
   conversations = [],
   user,
   setActiveChat,
-  logout,
 }) => {
   const classes = useStyles();
 
   return (
     <Box className={classes.root}>
-      <CurrentUser user={user} logout={logout} />
+      <CurrentUser user={user} />
       <Typography className={classes.title}>Chats</Typography>
       <Search handleChange={handleChange} />
       {conversations
         .filter((conversation) =>
-          conversation.otherUser.username.includes(searchTerm),
+          conversation.otherUser.username.includes(searchTerm)
         )
         .map((conversation) => {
           return (
