@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { Input, Header, Messages } from './index';
 import { uploadImages } from './helper';
 
 const useStyles = makeStyles(() => ({
-  root: {
-    display: 'flex',
-    flexGrow: 8,
-    flexDirection: 'column',
+  root: {},
+  headerWrapper:{
+    height:'15%',
   },
   chatContainer: {
     marginLeft: 41,
     marginRight: 41,
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    justifyContent: 'space-between',
+    height: '85%',
+    padding:'1.5rem',
+  },
+  messages:{
+    height: '85%',
+    overflowY: 'scroll',
+    scrollbarWidth: "none" ,
+    "&::-webkit-scrollbar": {
+      display: "none"
+    },
   },
 }));
 
@@ -53,7 +58,6 @@ const ActiveChat = ({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event.currentTarget);
     const form = event.currentTarget;
     const formElements = form.elements;
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
@@ -69,35 +73,41 @@ const ActiveChat = ({
   };
 
   return (
-    <Box className={classes.root}>
+    <Grid container item xs={8} className={classes.root}>
       {isConversation(conversation) && conversation.otherUser && (
         <>
-          <Header
-            username={conversation.otherUser.username}
-            online={conversation.otherUser.online || false}
-          />
-          <Box className={classes.chatContainer}>
+          <Grid item xs={12} className={classes.headerWrapper}>
+            <Header
+              username={conversation.otherUser.username}
+              online={conversation.otherUser.online || false}
+            />
+          </Grid>
+          <Grid container item xs={12} className={classes.chatContainer}>
             {user && (
               <>
-                <Messages
-                  messages={conversation.messages}
-                  otherUser={conversation.otherUser}
-                  userId={user.id}
-                />
-                <Input
-                  user={user}
-                  handleChange={handleChange}
-                  handleSubmit={handleSubmit}
-                  handleUpload={handleUpload}
-                  uploadURL={uploadURL}
-                  text={text}
-                />
+                <Grid item xs={12} className={classes.messages}>
+                  <Messages
+                    messages={conversation.messages}
+                    otherUser={conversation.otherUser}
+                    userId={user.id}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Input
+                    user={user}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    handleUpload={handleUpload}
+                    uploadURL={uploadURL}
+                    text={text}
+                  />
+                </Grid>
               </>
             )}
-          </Box>
+          </Grid>
         </>
       )}
-    </Box>
+    </Grid>
   );
 };
 

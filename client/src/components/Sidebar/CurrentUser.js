@@ -1,32 +1,24 @@
 import React from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { BadgeAvatar } from "./index";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 const useStyles = makeStyles(() => ({
   root: {
-    height: 44,
-    marginTop: 23,
-    marginLeft: 6,
-    display: "flex",
-    alignItems: "center",
+    marginBottom: '1rem',
   },
   subContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexGrow: 1,
   },
   username: {
     letterSpacing: -0.23,
-    fontSize: 16,
-    fontWeight: "bold",
-    marginLeft: 17,
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    marginLeft: '1rem',
   },
   ellipsis: {
-    color: "#95A7C4",
-    marginRight: 24,
+    color: '#95A7C4',
+    marginRight: '1.5rem',
     opacity: 0.5,
   },
 }));
@@ -35,13 +27,21 @@ const CurrentUser = ({ user }) => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.root}>
-      <BadgeAvatar photoUrl={user?.photoUrl} online={true} />
-      <Box className={classes.subContainer}>
+    <Grid container item className={classes.root} alignItems="center">
+      <Grid container item xs={2} alignItems="center">
+        <BadgeAvatar photoUrl={user?.photoUrl} online={true} />
+      </Grid>
+      <Grid
+        container
+        item
+        xs={10}
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <Typography className={classes.username}>{user?.username}</Typography>
         <MoreHorizIcon classes={{ root: classes.ellipsis }} />
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };
 

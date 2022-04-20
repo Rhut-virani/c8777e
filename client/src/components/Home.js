@@ -10,7 +10,7 @@ import { SocketContext } from "../context/socket";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh",
+    height: "90vh",
   },
 }));
 
@@ -212,7 +212,7 @@ const Home = ({ user, logout }) => {
   return (
     <>
       <Button onClick={handleLogout}>Logout</Button>
-      <Grid container component="main" className={classes.root}>
+      <Grid container component="main" className={classes.root} wrap='nowrap'>
         <CssBaseline />
         <SidebarContainer
           conversations={conversations}

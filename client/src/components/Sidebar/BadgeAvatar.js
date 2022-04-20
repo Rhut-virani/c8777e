@@ -5,12 +5,12 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
   profilePic: {
-    height: 44,
-    width: 44,
+    height: '2.75rem',
+    width: '2.75rem',
   },
   badge: {
-    height: 13,
-    width: 13,
+    height: '.8125rem',
+    width: '.8125rem',
     borderRadius: "50%",
     border: "2px solid white",
     backgroundColor: "#D0DAE9",
@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#1CED84",
   },
   sidebar: {
-    marginLeft: 17,
+    marginLeft: '1rem',
   },
 }));
 

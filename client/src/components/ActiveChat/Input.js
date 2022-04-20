@@ -4,10 +4,9 @@ import {
   FilledInput,
   InputAdornment,
   IconButton,
+  Grid,
 } from '@material-ui/core';
-import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
-import SendIcon from '@material-ui/icons/Send';
-import { makeStyles } from '@material-ui/core/styles';
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -16,9 +15,9 @@ const useStyles = makeStyles(() => ({
   },
   input: {
     height: 70,
-    backgroundColor: '#F4F6FA',
+    backgroundColor: '#E4ECF6',
     borderRadius: 8,
-    marginBottom: 20,
+    padding: '0 2rem'
   },
   hiddenInput: {
     display: 'none',
@@ -35,48 +34,41 @@ const Input = ({
   const classes = useStyles();
 
   return (
-    <form className={classes.root} onSubmit={handleSubmit} id="submit-form">
-      <FormControl fullWidth hiddenLabel>
-        <FilledInput
-          classes={{ root: classes.input }}
-          disableUnderline
-          placeholder="Type something..."
-          value={text}
-          name="text"
-          onChange={handleChange}
-          startAdornment={
-            <InputAdornment position="start">
-              <input
-                accept="image/*"
-                className={classes.hiddenInput}
-                id="contained-button-file"
-                multiple
-                type="file"
-                onChange={(e) => {
-                  handleUpload(e);
-                }}
-              />
-              <label htmlFor="contained-button-file">
-                <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="span"
-                >
-                  <PhotoCameraIcon />
-                </IconButton>
-              </label>
-            </InputAdornment>
-          }
-          endAdornment={
+      <form className={classes.root} onSubmit={handleSubmit} id="submit-form">
+        <FormControl fullWidth hiddenLabel>
+          <FilledInput
+            classes={{ root: classes.input }}
+            disableUnderline
+            placeholder="Type something..."
+            value={text}
+            name="text"
+            onChange={handleChange}
+            endAdornment={
             <InputAdornment position="end">
-              <IconButton type="submit" color="primary">
-                <SendIcon />
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </FormControl>
-    </form>
+                <input
+                  accept="image/*"
+                  className={classes.hiddenInput}
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                  onChange={(e) => {
+                    handleUpload(e);
+                  }}
+                />
+                <label htmlFor="contained-button-file">
+                  <IconButton
+                    color="secondary"
+                    aria-label="upload picture"
+                    component="span"
+                  >
+                    <FileCopyOutlinedIcon />
+                  </IconButton>
+                </label>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+      </form>
   );
 };
 
