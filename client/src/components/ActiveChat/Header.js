@@ -1,12 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100%',
     boxShadow: '0 2px 20px 0 rgba(88,133,196,0.10)',
+    width: '100%',
   },
   content: {
     marginLeft: '24px',
@@ -43,22 +43,22 @@ const Header = ({ username, online }) => {
   const classes = useStyles();
 
   return (
-    <Grid container className={classes.root}>
-      <Grid
-        container
-        item
-        xs={10}
-        alignItems="center"
-        className={classes.content}
-      >
-          <Typography className={classes.username}>{username}</Typography>
-          <Box className={`${classes.statusDot} ${online && classes.online}`} />
-          <Typography className={classes.statusText}>
-            {online ? 'Online' : 'Offline'}
-          </Typography>
-      </Grid>
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      px={3}
+      className={classes.root}
+    >
+      <Box display="flex" alignItems="center" className={classes.content}>
+        <Typography className={classes.username}>{username}</Typography>
+        <Box className={`${classes.statusDot} ${online && classes.online}`} />
+        <Typography className={classes.statusText}>
+          {online ? 'Online' : 'Offline'}
+        </Typography>
+      </Box>
       <MoreHorizIcon classes={{ root: classes.ellipsis }} />
-    </Grid>
+    </Box>
   );
 };
 

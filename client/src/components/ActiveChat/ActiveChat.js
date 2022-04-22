@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { Input, Header, Messages } from './index';
 import { uploadImages } from './helper';
 
 const useStyles = makeStyles(() => ({
   root: {},
-  headerWrapper:{
-    height:'15%',
-  },
+  headerWrapper: {},
   chatContainer: {
-    marginLeft: 41,
-    marginRight: 41,
-    height: '85%',
-    padding:'1.5rem',
+    padding: '1rem 2rem 0 2rem',
+    overflow: 'hidden',
   },
-  messages:{
-    height: '85%',
+  messages: {
     overflowY: 'scroll',
-    scrollbarWidth: "none" ,
-    "&::-webkit-scrollbar": {
-      display: "none"
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': {
+      display: 'none',
     },
+    marginBottom: '1rem',
   },
 }));
 
@@ -31,9 +27,19 @@ const ActiveChat = ({
   activeConversation,
   postMessage,
 }) => {
-  const classes = useStyles();
   const [text, setText] = useState('');
   const [uploadURL, setUploadURL] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const isCancelledRef = useRef(false);
+  const classes = useStyles(uploadURL);
+
+  useEffect(() => {
+    // clearing inputs if activeConversation changes
+    isCancelledRef.current = true;
+    setIsLoading(false);
+    setText('');
+    setUploadURL([]);
+  }, [activeConversation]);
 
   const conversation = conversations
     ? conversations.find(
@@ -52,8 +58,18 @@ const ActiveChat = ({
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    const uploadedUrls = await uploadImages(e);
-    setUploadURL(uploadedUrls);
+    isCancelledRef.current = false;
+    setIsLoading(true);
+    await uploadImages(e)
+      .then((res) =>
+        // if upload is cancelled return empty array;
+        !isCancelledRef.current && setUploadURL((prev) => [...prev, ...res]) ,
+      )
+      .catch((error) => {
+        console.error(error);
+      });
+    setIsLoading(false);
+    e.target.value = null;
   };
 
   const handleSubmit = async (event) => {
@@ -61,51 +77,80 @@ const ActiveChat = ({
     const form = event.currentTarget;
     const formElements = form.elements;
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
-    const reqBody = {
-      text: formElements.text.value,
+    let reqBody = {
       recipientId: conversation.otherUser.id,
       conversationId: conversation.id,
       sender: conversation.id ? null : user,
+      text: formElements.text.value,
       attachments: uploadURL,
     };
-    await postMessage(reqBody);
-    setText('');
+    if (!isLoading && (uploadURL.length || text)) {
+      await postMessage(reqBody);
+      setUploadURL([]);
+      setText('');
+    }
+  };
+
+  const handleClose = async () => {
+    isCancelledRef.current = true;
+    setIsLoading(false);
+    setUploadURL([]);
   };
 
   return (
-    <Grid container item xs={8} className={classes.root}>
+    <Grid
+      container
+      item
+      xs={8}
+      lg={9}
+      alignItems="stretch"
+      className={classes.root}
+    >
       {isConversation(conversation) && conversation.otherUser && (
-        <>
-          <Grid item xs={12} className={classes.headerWrapper}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          width="100%"
+          maxHeight="100%"
+        >
+          <Box display="flex" flex={1} className={classes.headerWrapper}>
             <Header
               username={conversation.otherUser.username}
               online={conversation.otherUser.online || false}
             />
-          </Grid>
-          <Grid container item xs={12} className={classes.chatContainer}>
+          </Box>
+          <Box
+            display="flex"
+            flexDirection="column"
+            flex={8}
+            className={classes.chatContainer}
+          >
             {user && (
               <>
-                <Grid item xs={12} className={classes.messages}>
+                <Box flex={6} className={classes.messages}>
                   <Messages
                     messages={conversation.messages}
                     otherUser={conversation.otherUser}
                     userId={user.id}
+                    uploadedImages={uploadURL}
                   />
-                </Grid>
-                <Grid item xs={12}>
+                </Box>
+                <Box flex={1} display="flex" alignItems="flex-end">
                   <Input
                     user={user}
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
                     handleUpload={handleUpload}
-                    uploadURL={uploadURL}
+                    handleClose={handleClose}
+                    uploadedImages={uploadURL}
                     text={text}
+                    isLoading={isLoading}
                   />
-                </Grid>
+                </Box>
               </>
             )}
-          </Grid>
-        </>
+          </Box>
+        </Box>
       )}
     </Grid>
   );
