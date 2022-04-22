@@ -1,12 +1,12 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Search, Chat, CurrentUser } from './index';
 
 const useStyles = makeStyles(() => ({
   root: {
-    padding: '1.5rem',
-    maxHeight: '100%',
+    padding: '0 1.5rem',
+    marginTop:'-4px',
   },
   title: {
     fontSize: '1.25rem',
@@ -39,6 +39,7 @@ const Sidebar = ({
       container
       item
       xs={4}
+      lg={3}
       alignContent="flex-start"
       spacing={1}
       className={classes.root}
