@@ -28,7 +28,6 @@ const Header = ({ text, linkText, link }) => {
   const classes = useStyles();
 
   return (
-    <>
       <Grid
         container
         item
@@ -45,7 +44,6 @@ const Header = ({ text, linkText, link }) => {
           />
         </Link>
       </Grid>
-    </>
   );
 };
 
