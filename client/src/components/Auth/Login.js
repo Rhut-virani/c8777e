@@ -4,7 +4,6 @@ import { Grid, TextField } from '@material-ui/core';
 import AuthForm from './AuthForm';
 
 const Login = ({ user, login }) => {
-
   const history = useHistory();
 
   const handleLogin = async (event) => {
@@ -22,7 +21,11 @@ const Login = ({ user, login }) => {
   }, [user, history]);
 
   return (
-    <AuthForm handleSubmit={handleLogin} greetingsText={'Welcome Back!'} buttonText={'Login'}>
+    <AuthForm
+      handleSubmit={handleLogin}
+      greetingsText={'Welcome Back!'}
+      buttonText={'Login'}
+    >
       <Grid item xs={12}>
         <TextField
           fullWidth

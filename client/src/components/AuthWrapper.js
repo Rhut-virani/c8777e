@@ -1,12 +1,12 @@
-import React from "react";
-import { Grid } from "@material-ui/core";
-import AuthSidePanel from "./Auth/AuthSidePanel";
-import Header from "./Auth/Header";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import { Grid } from '@material-ui/core';
+import AuthSidePanel from './Auth/AuthSidePanel';
+import Header from './Auth/Header';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   wrapper: {
-    height: "100vh",
+    height: '100vh',
   },
 }));
 
