@@ -3,11 +3,10 @@ import {
   FormControl,
   FilledInput,
   InputAdornment,
-  IconButton,
 } from '@material-ui/core';
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { UploadPreview } from './UploadPreview';
+import { UploadButton } from './UploadButton';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -18,9 +17,11 @@ const useStyles = makeStyles(() => ({
     backgroundColor: '#F0F5F9',
     padding: '0 2rem',
     borderRadius: (isLoading) => (isLoading ? '0 0 0.5rem 0.5rem' : '0.5rem'),
-  },
-  hiddenInput: {
-    display: 'none',
+    color: '#9CADC8',
+    fontWeight: 600,
+    '&.Mui-focused,&:hover': {
+      backgroundColor: '#e1ecf5',
+    },
   },
 }));
 
@@ -44,35 +45,16 @@ const Input = ({
           isLoading={isLoading}
         />
         <FilledInput
-          classes={{ root: classes.input }}
-          disableUnderline
+          name="text"
           placeholder="Type something..."
           value={text}
-          name="text"
           onChange={handleChange}
+          classes={{ root: classes.input }}
+          autoFocus
+          disableUnderline
           endAdornment={
             <InputAdornment position="end">
-              <input
-                accept="image/*"
-                className={classes.hiddenInput}
-                id="contained-button-file"
-                multiple
-                type="file"
-                onChange={(e) => {
-                  handleUpload(e);
-                }}
-                disabled={isLoading}
-              />
-              <label htmlFor="contained-button-file">
-                <IconButton
-                  color="secondary"
-                  aria-label="upload picture"
-                  component="span"
-                  disabled={isLoading}
-                >
-                  <FileCopyOutlinedIcon />
-                </IconButton>
-              </label>
+              <UploadButton handleUpload={handleUpload} isLoading={isLoading} />
             </InputAdornment>
           }
         />
