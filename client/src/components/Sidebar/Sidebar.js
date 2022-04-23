@@ -34,7 +34,7 @@ const Sidebar = ({
       <Search handleChange={handleChange} />
       {conversations
         .filter((conversation) =>
-          conversation.otherUser.username.includes(searchTerm)
+          conversation.otherUser.username.includes(searchTerm),
         )
         .map((conversation) => {
           return (
