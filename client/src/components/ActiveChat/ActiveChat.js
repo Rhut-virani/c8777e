@@ -61,9 +61,10 @@ const ActiveChat = ({
     isCancelledRef.current = false;
     setIsLoading(true);
     await uploadImages(e)
-      .then((res) =>
-        // if upload is cancelled return empty array;
-        !isCancelledRef.current && setUploadURL((prev) => [...prev, ...res]) ,
+      .then(
+        (res) =>
+          // if upload is cancelled return empty array;
+          !isCancelledRef.current && setUploadURL((prev) => [...prev, ...res]),
       )
       .catch((error) => {
         console.error(error);

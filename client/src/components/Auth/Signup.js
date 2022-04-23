@@ -3,9 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Grid, TextField } from '@material-ui/core';
 import AuthForm from './AuthForm';
 
-
 const Signup = ({ user, register }) => {
-
   const history = useHistory();
 
   const [formErrorMessage, setFormErrorMessage] = useState({});
@@ -31,7 +29,11 @@ const Signup = ({ user, register }) => {
   }, [user, history]);
 
   return (
-    <AuthForm handleSubmit={handleRegister} greetingsText={'Create an account.'} buttonText={'Create'}>
+    <AuthForm
+      handleSubmit={handleRegister}
+      greetingsText={'Create an account.'}
+      buttonText={'Create'}
+    >
       <Grid item xs={12}>
         <TextField
           fullWidth

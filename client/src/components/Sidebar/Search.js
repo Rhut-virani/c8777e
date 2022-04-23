@@ -1,7 +1,7 @@
-import React from "react";
-import { FormControl, FilledInput, InputAdornment } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import { FormControl, FilledInput, InputAdornment } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   filledInput: {
@@ -9,16 +9,16 @@ const useStyles = makeStyles(() => ({
     backgroundColor: '#E4ECF6',
     borderRadius: 5,
     fontSize: 13,
-    fontWeight: "bold",
-    color: "#99A9C4",
+    fontWeight: 'bold',
+    color: '#99A9C4',
     letterSpacing: 0,
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
     marginBottom: 20,
   },
   input: {
-    "&::placeholder": {
-      color: "#ADC0DE",
+    '&::placeholder': {
+      color: '#ADC0DE',
       opacity: 1,
     },
   },

@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
-import { Grid, CssBaseline, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useCallback, useEffect, useState, useContext } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import { Grid, CssBaseline, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-import { SidebarContainer } from "../components/Sidebar";
-import { ActiveChat } from "../components/ActiveChat";
-import { SocketContext } from "../context/socket";
+import { SidebarContainer } from '../components/Sidebar';
+import { ActiveChat } from '../components/ActiveChat';
+import { SocketContext } from '../context/socket';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "90vh",
+    height: '90vh',
   },
 }));
 
@@ -49,12 +49,12 @@ const Home = ({ user, logout }) => {
   };
 
   const saveMessage = async (body) => {
-    const { data } = await axios.post("/api/messages", body);
+    const { data } = await axios.post('/api/messages', body);
     return data;
   };
 
   const sendMessage = (data, body) => {
-    socket.emit("new-message", {
+    socket.emit('new-message', {
       message: data.message,
       recipientId: body.recipientId,
       sender: data.sender,
@@ -160,16 +160,16 @@ const Home = ({ user, logout }) => {
 
   useEffect(() => {
     // Socket init
-    socket.on("add-online-user", addOnlineUser);
-    socket.on("remove-offline-user", removeOfflineUser);
-    socket.on("new-message", addMessageToConversation);
+    socket.on('add-online-user', addOnlineUser);
+    socket.on('remove-offline-user', removeOfflineUser);
+    socket.on('new-message', addMessageToConversation);
 
     return () => {
       // before the component is destroyed
       // unbind all event handlers used in this component
-      socket.off("add-online-user", addOnlineUser);
-      socket.off("remove-offline-user", removeOfflineUser);
-      socket.off("new-message", addMessageToConversation);
+      socket.off('add-online-user', addOnlineUser);
+      socket.off('remove-offline-user', removeOfflineUser);
+      socket.off('new-message', addMessageToConversation);
     };
   }, [addMessageToConversation, addOnlineUser, removeOfflineUser, socket]);
 
@@ -181,15 +181,15 @@ const Home = ({ user, logout }) => {
       setIsLoggedIn(true);
     } else {
       // If we were previously logged in, redirect to login instead of register
-      if (isLoggedIn) history.push("/login");
-      else history.push("/register");
+      if (isLoggedIn) history.push('/login');
+      else history.push('/register');
     }
   }, [user, history, isLoggedIn]);
 
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const { data } = await axios.get("/api/conversations");
+        const { data } = await axios.get('/api/conversations');
         for (let conversation of data) {
           conversation.messages.reverse();
         }
@@ -212,7 +212,7 @@ const Home = ({ user, logout }) => {
   return (
     <>
       <Button onClick={handleLogout}>Logout</Button>
-      <Grid container component="main" className={classes.root} wrap='nowrap'>
+      <Grid container component="main" className={classes.root} wrap="nowrap">
         <CssBaseline />
         <SidebarContainer
           conversations={conversations}

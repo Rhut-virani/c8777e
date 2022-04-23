@@ -6,21 +6,20 @@ import { Search, Chat, CurrentUser } from './index';
 const useStyles = makeStyles(() => ({
   root: {
     padding: '0 1.5rem',
-    marginTop:'-4px',
+    marginTop: '-4px',
   },
   title: {
     fontSize: '1.25rem',
     letterSpacing: -0.29,
     fontWeight: 'bold',
   },
-  converations:{
+  converations: {
     height: '75%',
     overflowY: 'scroll',
-    scrollbarWidth: "none" ,
-    "&::-webkit-scrollbar": {
-      display: "none"
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': {
+      display: 'none',
     },
-
   },
 }));
 
@@ -60,13 +59,13 @@ const Sidebar = ({
           )
           .map((conversation) => {
             return (
-                <Chat
-                  conversation={conversation}
-                  key={conversation.otherUser.username}
-                  setActiveChat={setActiveChat}
-                />
-                );
-              })}
+              <Chat
+                conversation={conversation}
+                key={conversation.otherUser.username}
+                setActiveChat={setActiveChat}
+              />
+            );
+          })}
       </Grid>
     </Grid>
   );

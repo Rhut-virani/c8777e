@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
     },
     padding: '2rem',
     backgroundColor: '#F0F5F9',
-    borderRadius:'8px 8px 0 0'
+    borderRadius: '.5rem .5rem 0 0',
   },
   previewImage: {
     width: '20%',
@@ -63,7 +63,7 @@ export const UploadPreview = ({ uploadedImages, handleClose, isLoading }) => {
           {imageData}
           {isLoading && (
             <Box
-              display='flex'
+              display="flex"
               justifyContent="center"
               alignItems="center"
               bgcolor="#dae2eb"

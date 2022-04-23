@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   formButton: {
-    minWidth: '160px',
+    minWidth: '10rem',
     minHeight: '3.5rem',
     marginTop: '2rem',
     boxShadow: '0px 4px 4px rgba(88, 133, 196, 0.15)',
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
   },
   headerButton: {
-    minWidth: '140px',
+    minWidth: '8.75rem',
     padding: '0 2rem',
     minHeight: '3.375rem',
     boxShadow: '0px 4px 4px rgba(88, 133, 196, 0.15)',

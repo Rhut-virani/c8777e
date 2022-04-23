@@ -1,51 +1,51 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Route, Switch, withRouter } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
-import Signup from "./components/Auth/Signup.js";
-import Login from "./components/Auth/Login.js";
-import { SnackbarError, Home } from "./components";
-import { SocketContext, socket } from "./context/socket";
-import AuthWrapper from "./components/AuthWrapper.js";
+import Signup from './components/Auth/Signup.js';
+import Login from './components/Auth/Login.js';
+import { SnackbarError, Home } from './components';
+import { SocketContext, socket } from './context/socket';
+import AuthWrapper from './components/AuthWrapper.js';
 
 const Routes = (props) => {
   const [user, setUser] = useState({
     isFetching: true,
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   const login = async (credentials) => {
     try {
-      const { data } = await axios.post("/auth/login", credentials);
-      await localStorage.setItem("messenger-token", data.token);
+      const { data } = await axios.post('/auth/login', credentials);
+      await localStorage.setItem('messenger-token', data.token);
       setUser(data);
-      socket.emit("go-online", data.id);
+      socket.emit('go-online', data.id);
     } catch (error) {
       console.error(error);
-      setUser({ error: error.response.data.error || "Server Error" });
+      setUser({ error: error.response.data.error || 'Server Error' });
     }
   };
 
   const register = async (credentials) => {
     try {
-      const { data } = await axios.post("/auth/register", credentials);
-      await localStorage.setItem("messenger-token", data.token);
+      const { data } = await axios.post('/auth/register', credentials);
+      await localStorage.setItem('messenger-token', data.token);
       setUser(data);
-      socket.emit("go-online", data.id);
+      socket.emit('go-online', data.id);
     } catch (error) {
       console.error(error);
-      setUser({ error: error.response.data.error || "Server Error" });
+      setUser({ error: error.response.data.error || 'Server Error' });
     }
   };
 
   const logout = async (id) => {
     try {
-      await axios.delete("/auth/logout");
-      await localStorage.removeItem("messenger-token");
+      await axios.delete('/auth/logout');
+      await localStorage.removeItem('messenger-token');
       setUser({});
-      socket.emit("logout", id);
+      socket.emit('logout', id);
     } catch (error) {
       console.error(error);
     }
@@ -57,10 +57,10 @@ const Routes = (props) => {
     const fetchUser = async () => {
       setUser((prev) => ({ ...prev, isFetching: true }));
       try {
-        const { data } = await axios.get("/auth/user");
+        const { data } = await axios.get('/auth/user');
         setUser(data);
         if (data.id) {
-          socket.emit("go-online", data.id);
+          socket.emit('go-online', data.id);
         }
       } catch (error) {
         console.error(error);
@@ -75,10 +75,10 @@ const Routes = (props) => {
   useEffect(() => {
     if (user?.error) {
       // check to make sure error is what we expect, in case we get an unexpected server error object
-      if (typeof user.error === "string") {
+      if (typeof user.error === 'string') {
         setErrorMessage(user.error);
       } else {
-        setErrorMessage("Internal Server Error. Please try again");
+        setErrorMessage('Internal Server Error. Please try again');
       }
       setSnackBarOpen(true);
     }

@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
     fontWeight: 'bold',
     margin: '0.5rem',
   },
-}))
+}));
 const SenderBubble = ({ time, text, attachments }) => {
   const classes = useStyles();
   return (
@@ -21,7 +21,12 @@ const SenderBubble = ({ time, text, attachments }) => {
       m="1.5rem 0.5rem 0 0"
     >
       <Typography className={classes.date}>{time}</Typography>
-      <MessageContent time={time} text={text} attachments={attachments} isSender={true} />
+      <MessageContent
+        time={time}
+        text={text}
+        attachments={attachments}
+        isSender={true}
+      />
     </Box>
   );
 };

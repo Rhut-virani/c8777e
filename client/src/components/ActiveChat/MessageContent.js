@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
   },
   textBubble: {
     maxWidth: '25%',
-    width:'fit-content',
+    width: 'fit-content',
     background: (isSender) =>
       isSender
         ? '#F0F5F9'
@@ -36,7 +36,11 @@ const MessageContent = ({ attachments, text, isSender }) => {
   return (
     <>
       {!!attachments?.length ? (
-        <AttachmentGrid text={text} attachments={attachments} isSender={isSender}/>
+        <AttachmentGrid
+          text={text}
+          attachments={attachments}
+          isSender={isSender}
+        />
       ) : (
         <Box className={classes.textBubble}>
           <Typography className={classes.text}>{text}</Typography>

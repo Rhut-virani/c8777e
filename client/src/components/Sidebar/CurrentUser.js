@@ -1,15 +1,14 @@
-import React from "react";
-import { Grid, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { BadgeAvatar } from "./index";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import React from 'react';
+import { Grid, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { BadgeAvatar } from './index';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles(() => ({
   root: {
     marginBottom: '1rem',
   },
-  subContainer: {
-  },
+  subContainer: {},
   username: {
     letterSpacing: -0.23,
     fontSize: '1rem',
