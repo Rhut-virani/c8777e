@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Grid } from '@material-ui/core';
 import { Input, Header, Messages } from './index';
-import { uploadImages } from './helper';
+import { deleteImages, uploadImages } from './helper';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -33,7 +33,7 @@ const ActiveChat = ({
   const [uploadURL, setUploadURL] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isCancelledRef = useRef(false);
-  const classes = useStyles(uploadURL);
+  const classes = useStyles();
 
   useEffect(() => {
     // clearing inputs if activeConversation changes
@@ -80,13 +80,17 @@ const ActiveChat = ({
     event.preventDefault();
     const form = event.currentTarget;
     const formElements = form.elements;
+
+    const attachments = uploadURL.map((data) => {
+      return data.url; 
+    });
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
     let reqBody = {
       recipientId: conversation.otherUser.id,
       conversationId: conversation.id,
       sender: conversation.id ? null : user,
       text: formElements.text.value,
-      attachments: uploadURL,
+      attachments: attachments,
     };
     if (!isLoading && (uploadURL.length || text)) {
       await postMessage(reqBody);
@@ -99,6 +103,17 @@ const ActiveChat = ({
     isCancelledRef.current = true;
     setIsLoading(false);
     setUploadURL([]);
+  };
+
+  const handleRemove = (id, delete_token) => {
+    //remove images from cloud
+    deleteImages(delete_token);
+
+    setUploadURL((prev) => {
+      return prev.filter((url) => {
+        return url.id !== id;
+      });
+    });
   };
 
   return (
@@ -136,7 +151,6 @@ const ActiveChat = ({
                     messages={conversation.messages}
                     otherUser={conversation.otherUser}
                     userId={user.id}
-                    uploadedImages={uploadURL}
                   />
                 </Box>
                 <Box flex={1} display="flex" alignItems="flex-end">
@@ -146,6 +160,7 @@ const ActiveChat = ({
                     handleSubmit={handleSubmit}
                     handleUpload={handleUpload}
                     handleClose={handleClose}
+                    handleRemove={handleRemove}
                     uploadedImages={uploadURL}
                     text={text}
                     isLoading={isLoading}

@@ -39,6 +39,7 @@ const AttachmentGrid = ({ text, attachments, isSender }) => {
         image={image}
         array={array}
         extraImages={extraImages}
+        isSender={isSender}
       />
     );
   });

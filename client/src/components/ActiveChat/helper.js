@@ -39,7 +39,11 @@ export const uploadImages = async (e) => {
           }
         })
         .then((result) => {
-          uploadedUrls.push(result.secure_url);
+          uploadedUrls.push({
+            url: result.secure_url,
+            id: result.public_id,
+            delete_token: result.delete_token,
+          });
         })
         .catch((error) => {
           throw new Error(error);
@@ -47,4 +51,20 @@ export const uploadImages = async (e) => {
     }
   }
   return uploadedUrls;
+};
+
+export const deleteImages = (token) => {
+  const url = `https://api.cloudinary.com/v1_1/${config.CLOUD_NAME}/delete_by_token`;
+  const formData = new FormData();
+  formData.append('token', token);
+  fetch(url, {
+    method: 'POST',
+    body: formData,
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };

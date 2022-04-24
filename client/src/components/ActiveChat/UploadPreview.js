@@ -1,5 +1,4 @@
 import {
-  Box,
   CircularProgress,
   Grid,
   IconButton,
@@ -20,12 +19,23 @@ const useStyles = makeStyles(() => ({
     padding: '2rem',
     backgroundColor: '#F0F5F9',
     borderRadius: '.5rem .5rem 0 0',
+    borderBottom: '1px #D1D9E6 solid',
+  },
+  imageBox: {
+    aspectRatio: '1 / 1',
+    marginRight: '2rem',
+    position: 'relative',
   },
   previewImage: {
-    width: '20%',
+    height: '100%',
     aspectRatio: '1 / 1',
     objectFit: 'cover',
-    marginRight: '2rem',
+  },
+  loadingBox: {
+    width: '25%',
+    aspectRatio: '1 / 1',
+    objectFit: 'cover',
+    backgroundColor: '#dae2eb',
   },
   close: {
     position: 'absolute',
@@ -34,13 +44,37 @@ const useStyles = makeStyles(() => ({
     top: '-0.5rem',
     right: '-0.5rem',
   },
+  removeImage: {
+    position: 'absolute',
+    height: '1rem',
+    width: '1rem',
+    top: '-0.5rem',
+    left: '-0.5rem',
+    backgroundColor: '#3A8DFF',
+    '&:hover': {
+      backgroundColor: '#396bb0',
+    },
+  },
 }));
 
-export const UploadPreview = ({ uploadedImages, handleClose, isLoading }) => {
+export const UploadPreview = ({
+  uploadedImages,
+  handleClose,
+  isLoading,
+  handleRemove,
+}) => {
   const classes = useStyles();
-  const imageData = uploadedImages.map((image, i) => {
+  const imageData = uploadedImages.map((image) => {
     return (
-      <img key={i} src={image} alt="preview" className={classes.previewImage} />
+      <Grid container item xs={2} className={classes.imageBox} key={image.id}>
+        <IconButton
+          className={classes.removeImage}
+          onClick={() => handleRemove(image.id, image.delete_token)}
+        >
+          <CancelIcon color="secondary" />
+        </IconButton>
+        <img className={classes.previewImage} src={image.url} alt="preview" />
+      </Grid>
     );
   });
   return (
@@ -58,19 +92,20 @@ export const UploadPreview = ({ uploadedImages, handleClose, isLoading }) => {
       >
         <>
           <IconButton className={classes.close} onClick={handleClose}>
-            <CancelIcon />
+            <CancelIcon color="primary" fontSize="large" />
           </IconButton>
           {imageData}
           {isLoading && (
-            <Box
-              display="flex"
+            <Grid
+              container
+              item
+              xs={2}
               justifyContent="center"
               alignItems="center"
-              bgcolor="#dae2eb"
-              className={classes.previewImage}
+              className={classes.loadingBox}
             >
-              <CircularProgress />
-            </Box>
+              <CircularProgress color="primary" />
+            </Grid>
           )}
         </>
       </Grid>

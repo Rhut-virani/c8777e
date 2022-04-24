@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  FormControl,
-  FilledInput,
-  InputAdornment,
-} from '@material-ui/core';
+import { FormControl, FilledInput, InputAdornment } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { UploadPreview } from './UploadPreview';
 import { UploadButton } from './UploadButton';
@@ -33,6 +29,7 @@ const Input = ({
   handleUpload,
   handleClose,
   isLoading,
+  handleRemove,
 }) => {
   const classes = useStyles(isLoading);
 
@@ -43,6 +40,7 @@ const Input = ({
           uploadedImages={uploadedImages}
           handleClose={handleClose}
           isLoading={isLoading}
+          handleRemove={handleRemove}
         />
         <FilledInput
           name="text"

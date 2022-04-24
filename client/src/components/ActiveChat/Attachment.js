@@ -10,7 +10,8 @@ const useStyles = makeStyles(() => ({
     objectFit: 'cover',
     width: '100%',
     height: '100%',
-    borderRadius: '0.5rem',
+    borderRadius: (isSender) =>
+      isSender ? '0.5rem 0.5rem 0 0.5rem' : '0.5rem 0.5rem 0.5rem 0',
   },
   extraImages: {
     display: 'flex',
@@ -23,8 +24,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Attachment = ({ image, array, id, extraImages }) => {
-  const classes = useStyles();
+const Attachment = ({ image, array, id, extraImages, isSender }) => {
+  const classes = useStyles(isSender);
   return (
     <Grid
       item
