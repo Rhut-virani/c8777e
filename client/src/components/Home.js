@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = ({ user, logout }) => {
+const Home = ({ user, logout, setSnackBarOpen, setErrorMessage}) => {
   const history = useHistory();
 
   const socket = useContext(SocketContext);
@@ -226,6 +226,8 @@ const Home = ({ user, logout }) => {
           conversations={conversations}
           user={user}
           postMessage={postMessage}
+          setSnackBarOpen={setSnackBarOpen}
+          setErrorMessage={setErrorMessage}
         />
       </Grid>
     </>

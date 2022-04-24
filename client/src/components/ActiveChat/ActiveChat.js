@@ -26,6 +26,8 @@ const ActiveChat = ({
   conversations,
   activeConversation,
   postMessage,
+  setErrorMessage,
+  setSnackBarOpen,
 }) => {
   const [text, setText] = useState('');
   const [uploadURL, setUploadURL] = useState([]);
@@ -61,13 +63,14 @@ const ActiveChat = ({
     isCancelledRef.current = false;
     setIsLoading(true);
     await uploadImages(e)
-      .then(
-        (res) =>
-          // if upload is cancelled return empty array;
-          !isCancelledRef.current && setUploadURL((prev) => [...prev, ...res]),
-      )
+      .then((res) => {
+        //  set State only if user has not cancelled upload
+        !isCancelledRef.current && setUploadURL((prev) => [...prev, ...res]);
+      })
       .catch((error) => {
-        console.error(error);
+        console.log(error.message);
+        setErrorMessage(error.message);
+        setSnackBarOpen(true);
       });
     setIsLoading(false);
     e.target.value = null;

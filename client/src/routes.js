@@ -129,7 +129,14 @@ const Routes = (props) => {
         />
         <Route
           path="/home"
-          render={() => <Home user={user} logout={logout} />}
+          render={() => (
+            <Home
+              user={user}
+              logout={logout}
+              setSnackBarOpen={setSnackBarOpen}
+              setErrorMessage={setErrorMessage}
+            />
+          )}
         />
       </Switch>
     </SocketContext.Provider>
