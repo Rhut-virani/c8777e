@@ -5,8 +5,6 @@ import { Input, Header, Messages } from './index';
 import { deleteImages, uploadImages } from './helper';
 
 const useStyles = makeStyles(() => ({
-  root: {},
-  headerWrapper: {},
   chatContainer: {
     padding: '1rem 2rem 0 2rem',
     overflow: 'hidden',
@@ -82,7 +80,7 @@ const ActiveChat = ({
     const formElements = form.elements;
 
     const attachments = uploadURL.map((data) => {
-      return data.url; 
+      return data.url;
     });
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
     let reqBody = {
@@ -117,14 +115,7 @@ const ActiveChat = ({
   };
 
   return (
-    <Grid
-      container
-      item
-      xs={8}
-      lg={9}
-      alignItems="stretch"
-      className={classes.root}
-    >
+    <Grid container item xs={8} lg={9} alignItems="stretch">
       {isConversation(conversation) && conversation.otherUser && (
         <Box
           display="flex"
@@ -132,7 +123,7 @@ const ActiveChat = ({
           width="100%"
           maxHeight="100%"
         >
-          <Box display="flex" flex={1} className={classes.headerWrapper}>
+          <Box display="flex" flex={1}>
             <Header
               username={conversation.otherUser.username}
               online={conversation.otherUser.online || false}

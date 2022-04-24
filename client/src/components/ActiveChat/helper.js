@@ -17,10 +17,10 @@ export const uploadImages = async (e) => {
   for (let file of files) {
     //file size validation
     const fileSizeLimit = 50;
-    const fileSize = file.size / 1024 / 1024; // converting file size to mb
+    const fileSize = file.size / 1024 / 1024; // converting file size to MB
     if (fileSize > fileSizeLimit) {
       throw new Error(
-        `File size more than ${fileSizeLimit}mb, Please use a smaller file size`,
+        `File size more than ${fileSizeLimit}MB, Please use a smaller file size`,
       );
     } else {
       formData.append('file', file);

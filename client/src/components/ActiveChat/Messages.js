@@ -11,6 +11,7 @@ const Messages = (props) => {
       endMessagesRef.current.scrollIntoView({ behaviour: 'smooth' });
     }
   }, [messages]);
+
   return (
     <>
       {messages.map((message) => {
@@ -33,7 +34,7 @@ const Messages = (props) => {
           />
         );
       })}
-      {/* Ref point to scroll to on new message */}
+      {/* Ref point to scroll to the newest message */}
       <div ref={endMessagesRef} />
     </>
   );
