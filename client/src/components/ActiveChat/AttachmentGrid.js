@@ -30,6 +30,7 @@ const AttachmentGrid = ({ text, attachments, isSender }) => {
 
   const extraImages = attachments?.length > 4 ? attachments.length - 3 : 0;
 
+  // only displaying 4 images if there are more than 4 images
   const attachmentData = attachments?.slice(0, 4).map((image, i, array) => {
     return (
       <Attachment

@@ -6,14 +6,14 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles(() => ({
   root: {
-    marginBottom: '1rem',
+    padding: '1rem 0',
   },
   subContainer: {},
   username: {
     letterSpacing: -0.23,
     fontSize: '1rem',
     fontWeight: 'bold',
-    marginLeft: '1rem',
+    marginLeft: '0.5rem',
   },
   ellipsis: {
     color: '#95A7C4',

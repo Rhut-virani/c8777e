@@ -6,11 +6,12 @@ import { Search, Chat, CurrentUser } from './index';
 const useStyles = makeStyles(() => ({
   root: {
     padding: '0 1.5rem',
-    marginTop: '-4px',
+    marginTop: 0,
+    overflow: 'hidden',
   },
   title: {
     fontSize: '1.25rem',
-    letterSpacing: -0.29,
+    letterSpacing: '-0.018rem',
     fontWeight: 'bold',
   },
   converations: {

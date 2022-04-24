@@ -31,6 +31,7 @@ const Attachment = ({ image, array, id, extraImages }) => {
       xs={array.length === 1 ? 12 : 6}
       className={classes.imageWrapper}
     >
+      {/* add overlay if there are more than 4 images  */}
       {!!extraImages && id === 3 ? (
         <Box
           className={classes.extraImages}
