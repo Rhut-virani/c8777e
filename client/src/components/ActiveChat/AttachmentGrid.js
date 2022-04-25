@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
     background: ({ isSender, text }) =>
       // if there are only images and no text then dont add background
       !text
-        ? ''
+        ? 'none'
         : isSender
         ? '#F0F5F9'
         : 'linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)',
