@@ -1,16 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { SenderBubble, OtherUserBubble } from '.';
 import moment from 'moment';
 
 const Messages = (props) => {
   const { messages, otherUser, userId } = props;
-  const endMessagesRef = useRef();
-
-  useEffect(() => {
-    if (endMessagesRef.current) {
-      endMessagesRef.current.scrollIntoView({ behaviour: 'smooth' });
-    }
-  }, [messages]);
 
   return (
     <>
@@ -34,8 +27,6 @@ const Messages = (props) => {
           />
         );
       })}
-      {/* Ref point to scroll to the newest message */}
-      <div ref={endMessagesRef} />
     </>
   );
 };

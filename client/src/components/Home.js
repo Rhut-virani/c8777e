@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = ({ user, logout, setSnackBarOpen, setErrorMessage}) => {
+const Home = ({ user, logout, setSnackBarOpen, setErrorMessage }) => {
   const history = useHistory();
 
   const socket = useContext(SocketContext);
@@ -64,7 +64,6 @@ const Home = ({ user, logout, setSnackBarOpen, setErrorMessage}) => {
   const postMessage = async (body) => {
     try {
       const data = await saveMessage(body);
-
       if (!body.conversationId) {
         addNewConvo(body.recipientId, data.message);
       } else {
