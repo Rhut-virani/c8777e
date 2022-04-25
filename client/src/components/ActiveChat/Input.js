@@ -12,7 +12,8 @@ const useStyles = makeStyles(() => ({
     height: '4.5rem',
     backgroundColor: '#F0F5F9',
     padding: '0 2rem',
-    borderRadius: (isLoading) => (isLoading ? '0 0 0.5rem 0.5rem' : '0.5rem'),
+    borderRadius: ({ uploadedImages, isLoading }) =>
+      uploadedImages.length || isLoading ? '0 0 0.5rem 0.5rem' : '0.5rem',
     color: '#9CADC8',
     fontWeight: 600,
     '&.Mui-focused,&:hover': {
@@ -31,7 +32,7 @@ const Input = ({
   isLoading,
   handleRemove,
 }) => {
-  const classes = useStyles(isLoading);
+  const classes = useStyles({ uploadedImages, isLoading });
 
   return (
     <form className={classes.root} onSubmit={handleSubmit} id="submit-form">
