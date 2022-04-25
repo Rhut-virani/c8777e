@@ -6,7 +6,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles(() => ({
   root: {
-    padding: '1rem 0',
+    padding: '0.5rem 0',
   },
   subContainer: {},
   username: {
