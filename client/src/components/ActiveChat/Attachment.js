@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
     borderRadius: (isSender) =>
-      isSender ? '0.5rem 0.5rem 0 0.5rem' : '0.5rem 0.5rem 0.5rem 0',
+      isSender ? '0.5rem 0.5rem 0 0.5rem' : '0 0.5rem 0.5rem 0.5rem',
   },
   extraImages: {
     display: 'flex',
@@ -21,7 +21,8 @@ const useStyles = makeStyles(() => ({
     aspectRatio: '1/1',
     fontSize: '2rem',
     color: 'white',
-    borderRadius: '0.5rem',
+    borderRadius: (isSender) =>
+      isSender ? '0.5rem 0.5rem 0 0.5rem' : '0 0.5rem 0.5rem 0.5rem',
   },
 }));
 
