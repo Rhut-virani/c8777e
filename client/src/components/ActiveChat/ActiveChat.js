@@ -98,18 +98,19 @@ const ActiveChat = ({
   };
 
   const handleClose = async () => {
+    // remove all selected images fom the Cloudinary
+    deleteImages(uploadURL);
     isCancelledRef.current = true;
     setIsLoading(false);
     setUploadURL([]);
   };
 
-  const handleRemove = (id, delete_token) => {
-    //remove images from cloud
-    deleteImages(delete_token);
-
+  const handleRemove = (image) => {
+    //remove one selected image from Cloudinary
+    deleteImages([image]);
     setUploadURL((prev) => {
       return prev.filter((url) => {
-        return url.id !== id;
+        return url.id !== image.id;
       });
     });
   };

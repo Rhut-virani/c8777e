@@ -69,7 +69,7 @@ export const UploadPreview = ({
       <Grid container item xs={2} className={classes.imageBox} key={image.id}>
         <IconButton
           className={classes.removeImage}
-          onClick={() => handleRemove(image.id, image.delete_token)}
+          onClick={() => handleRemove(image)}
         >
           <CancelIcon color="secondary" />
         </IconButton>
