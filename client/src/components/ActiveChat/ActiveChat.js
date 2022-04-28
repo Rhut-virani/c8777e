@@ -60,18 +60,17 @@ const ActiveChat = ({
     e.preventDefault();
     isCancelledRef.current = false;
     setIsLoading(true);
-    await uploadImages(e)
-      .then((res) => {
-        //  set State only if user has not cancelled upload
-        !isCancelledRef.current && setUploadURL((prev) => [...prev, ...res]);
-      })
-      .catch((error) => {
-        console.log(error.message);
-        setErrorMessage(error.message);
-        setSnackBarOpen(true);
-      });
-    setIsLoading(false);
-    e.target.value = null;
+    try {
+      const result = await uploadImages(e);
+      //  set State only if user has not cancelled upload
+      !isCancelledRef.current && setUploadURL((prev) => [...prev, ...result]);
+    } catch (error) {
+      setErrorMessage(error.message);
+      setSnackBarOpen(true);
+    } finally {
+      setIsLoading(false);
+      e.target.value = null;
+    }
   };
 
   const handleSubmit = async (event) => {
