@@ -32,9 +32,11 @@ const AttachmentGrid = ({ text, attachments, isSender }) => {
 
   // only displaying 4 images if there are more than 4 images
   const attachmentData = attachments?.slice(0, 4).map((image, i, array) => {
+    // extracting filename from url and using that as key
+    const id = image.match(/([^\/]+)(?=\.\w+$)/)[0];
     return (
       <Attachment
-        key={i}
+        key={id}
         id={i}
         image={image}
         array={array}
