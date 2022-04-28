@@ -1,13 +1,15 @@
-export const uploadImages = async (e) => {
-  const controller = new AbortController();
-  let uploadedUrls = [];
+import axios from 'axios';
+export const uploadImages = async (e, uploadedfiles) => {
   const files = e.target.files;
+  const instance = axios.create();
   const formData = new FormData();
   const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`;
+  const uploadedUrls = [];
+  const promises = [];
 
   // Max number of files
   const maxFiles = 10;
-  if (files.length > maxFiles) {
+  if (files.length + uploadedfiles > maxFiles) {
     throw new Error(
       `Too many files selected, Please select upto ${maxFiles} files at a time`,
     );
@@ -23,48 +25,40 @@ export const uploadImages = async (e) => {
     } else {
       formData.append('file', file);
       formData.append('upload_preset', process.env.REACT_APP_UPLOAD_PRESET);
-      await fetch(url, {
-        signal: controller.signal,
-        method: 'POST',
-        body: formData,
-      })
-        .then((response) => {
-          // check if any errors in response
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          } else {
-            return response.json();
-          }
-        })
-        .then((result) => {
-          uploadedUrls.push({
-            url: result.secure_url,
-            id: result.public_id,
-            delete_token: result.delete_token,
-          });
-        })
-        .catch((error) => {
-          throw new Error(error);
-        });
+      promises.push(await instance.post(url, formData));
     }
   }
-  return uploadedUrls;
+
+  try {
+    const result = await Promise.all(promises);
+    result.forEach((image) => {
+      uploadedUrls.push({
+        url: image.data.secure_url,
+        id: image.data.public_id,
+        delete_token: image.data.delete_token,
+      });
+    });
+  } catch (error) {
+    throw new Error(error);
+  } finally {
+    return uploadedUrls;
+  }
 };
 
-export const deleteImages = (selectedImages) => {
+export const deleteImages = async (selectedImages) => {
   const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/delete_by_token`;
+  const instance = axios.create();
   const formData = new FormData();
+  const promises = [];
+
   for (let image of selectedImages) {
     formData.append('token', image.delete_token);
-    fetch(url, {
-      method: 'POST',
-      body: formData,
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    promises.push(await instance.post(url, formData));
+  }
+
+  try {
+    await Promise.all(promises);
+  } catch (error) {
+    throw new Error(error);
   }
 };

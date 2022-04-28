@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* // Temp fix for the Create-React-app overlay bug -- https://github.com/facebook/create-react-app/issues/11773 */
+iframe {
+  pointer-events: none;
+}

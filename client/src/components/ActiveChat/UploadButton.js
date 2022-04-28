@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton, makeStyles } from '@material-ui/core';
+import { IconButton, Input, makeStyles } from '@material-ui/core';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 
 const useStyles = makeStyles(() => ({
@@ -11,33 +11,31 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const UploadButton = ({handleUpload, isLoading}) => {
+export const UploadButton = ({ handleUpload, isLoading }) => {
   const classes = useStyles(isLoading);
 
   return (
-    <>
-      <input
+    <label htmlFor="contained-button-file">
+      <Input
         accept="image/*"
-        className={classes.hiddenInput}
         id="contained-button-file"
-        multiple
         type="file"
+        disabled={isLoading}
+        className={classes.hiddenInput}
         onChange={(e) => {
           handleUpload(e);
         }}
-        disabled={isLoading}
+        inputProps={{ multiple: true }}
       />
-      <label htmlFor="contained-button-file">
-        <IconButton
-          color="secondary"
-          aria-label="upload picture"
-          component="span"
-          disabled={isLoading}
-          className={classes.fileButton}
-        >
-          <FileCopyOutlinedIcon />
-        </IconButton>
-      </label>
-    </>
+      <IconButton
+        color="secondary"
+        aria-label="upload picture"
+        component="span"
+        disabled={isLoading}
+        className={classes.fileButton}
+      >
+        <FileCopyOutlinedIcon />
+      </IconButton>
+    </label>
   );
 };

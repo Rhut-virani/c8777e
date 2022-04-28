@@ -61,7 +61,8 @@ const ActiveChat = ({
     isCancelledRef.current = false;
     setIsLoading(true);
     try {
-      const result = await uploadImages(e);
+      // sending number of already uploaded files 
+      const result = await uploadImages(e, uploadURL.length); 
       //  set State only if user has not cancelled upload
       !isCancelledRef.current && setUploadURL((prev) => [...prev, ...result]);
     } catch (error) {
