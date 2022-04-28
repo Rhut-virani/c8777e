@@ -1,11 +1,9 @@
-import { config } from '../../config';
-
 export const uploadImages = async (e) => {
   const controller = new AbortController();
   let uploadedUrls = [];
   const files = e.target.files;
   const formData = new FormData();
-  const url = `https://api.cloudinary.com/v1_1/${config.CLOUD_NAME}/image/upload`;
+  const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`;
 
   // Max number of files
   const maxFiles = 10;
@@ -24,7 +22,7 @@ export const uploadImages = async (e) => {
       );
     } else {
       formData.append('file', file);
-      formData.append('upload_preset', config.UPLOAD_PRESET);
+      formData.append('upload_preset', process.env.REACT_APP_UPLOAD_PRESET);
       await fetch(url, {
         signal: controller.signal,
         method: 'POST',
@@ -54,7 +52,7 @@ export const uploadImages = async (e) => {
 };
 
 export const deleteImages = (selectedImages) => {
-  const url = `https://api.cloudinary.com/v1_1/${config.CLOUD_NAME}/delete_by_token`;
+  const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/delete_by_token`;
   const formData = new FormData();
   for (let image of selectedImages) {
     formData.append('token', image.delete_token);
