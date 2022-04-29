@@ -18,11 +18,13 @@ const useStyles = makeStyles(() => ({
     color: '#BECCE2',
     fontWeight: 'bold',
     marginBottom: 5,
+    order: ({ totalImages, text }) => (totalImages > 1 && text ? 2 : 0),
   },
 }));
 
 const OtherUserBubble = ({ text, time, otherUser, attachments }) => {
-  const classes = useStyles();
+  const totalImages = attachments?.length || 0;
+  const classes = useStyles({ totalImages, text });
 
   return (
     <Box display="flex" mt="1.5rem">
@@ -31,7 +33,11 @@ const OtherUserBubble = ({ text, time, otherUser, attachments }) => {
         src={otherUser.photoUrl}
         className={classes.avatar}
       />
-      <Box className={classes.messageContent}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        className={classes.messageContent}
+      >
         <Typography className={classes.usernameDate}>
           {otherUser.username} {time}
         </Typography>
@@ -40,6 +46,7 @@ const OtherUserBubble = ({ text, time, otherUser, attachments }) => {
           text={text}
           isSender={false}
           attachments={attachments}
+          totalImages={totalImages}
         />
       </Box>
     </Box>

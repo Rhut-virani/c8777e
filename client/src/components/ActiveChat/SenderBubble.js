@@ -9,10 +9,13 @@ const useStyles = makeStyles(() => ({
     color: '#BECCE2',
     fontWeight: 'bold',
     margin: '0.5rem',
+    order: ({ totalImages, text }) => (totalImages > 1 && !!text ? 2 : 0),
   },
 }));
+
 const SenderBubble = ({ time, text, attachments }) => {
-  const classes = useStyles();
+  const totalImages = attachments?.length || 0;
+  const classes = useStyles({ totalImages, text });
   return (
     <Box
       display="flex"
@@ -26,6 +29,7 @@ const SenderBubble = ({ time, text, attachments }) => {
         text={text}
         attachments={attachments}
         isSender={true}
+        totalImages={totalImages}
       />
     </Box>
   );

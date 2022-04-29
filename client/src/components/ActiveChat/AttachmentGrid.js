@@ -1,34 +1,18 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Attachment from './Attachment';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
-  text: {
-    fontSize: '0.9rem',
-    color: ({ isSender }) => (isSender ? '#91A3C0' : '#FFFFFF'),
-    letterSpacing: '-0.0125rem',
-    padding: '.5rem 0.75rem',
-    fontWeight: 'bold',
-  },
   attachmentBubble: {
     width: '25%',
-    background: ({ isSender, text, attachments }) =>
-      // if there are only images and no text then dont add background
-      (!text || attachments?.length > 1)
-        ? 'none'
-        : isSender
-        ? '#F0F5F9'
-        : 'linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)',
-    borderRadius: ({ isSender }) =>
-      isSender ? '10px 10px 0px 10px' : '0px 10px 10px 10px',
   },
 }));
 
-const AttachmentGrid = ({ text, attachments, isSender }) => {
+const AttachmentGrid = ({ text, attachments, isSender, totalImages }) => {
   const classes = useStyles({ isSender, text, attachments });
 
-  const extraImages = attachments?.length > 4 ? attachments.length - 3 : 0;
+  const extraImages = totalImages > 4 ? totalImages - 3 : 0;
 
   // only displaying 4 images if there are more than 4 images
   const attachmentData = attachments?.slice(0, 4).map((image, i, array) => {
@@ -37,9 +21,9 @@ const AttachmentGrid = ({ text, attachments, isSender }) => {
     return (
       <Attachment
         key={id}
-        id={i}
+        index={i}
         image={image}
-        array={array}
+        totalImages={totalImages}
         text={text}
         extraImages={extraImages}
         isSender={isSender}
@@ -53,11 +37,6 @@ const AttachmentGrid = ({ text, attachments, isSender }) => {
       className={classes.attachmentBubble}
     >
       {attachmentData}
-      {!!text && attachments?.length === 1 && (
-        <Grid item xs={12}>
-          <Typography className={classes.text}>{text}</Typography>
-        </Grid>
-      )}
     </Grid>
   );
 };
