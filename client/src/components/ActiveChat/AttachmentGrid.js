@@ -8,14 +8,14 @@ const useStyles = makeStyles(() => ({
     fontSize: '0.9rem',
     color: ({ isSender }) => (isSender ? '#91A3C0' : '#FFFFFF'),
     letterSpacing: '-0.0125rem',
-    padding: '0 .25rem .5rem .5rem',
+    padding: '.5rem 0.75rem',
     fontWeight: 'bold',
   },
   attachmentBubble: {
     width: '25%',
-    background: ({ isSender, text }) =>
+    background: ({ isSender, text, attachments }) =>
       // if there are only images and no text then dont add background
-      !text
+      (!text || attachments?.length > 1)
         ? 'none'
         : isSender
         ? '#F0F5F9'
@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const AttachmentGrid = ({ text, attachments, isSender }) => {
-  const classes = useStyles({ isSender, text });
+  const classes = useStyles({ isSender, text, attachments });
 
   const extraImages = attachments?.length > 4 ? attachments.length - 3 : 0;
 
@@ -40,6 +40,7 @@ const AttachmentGrid = ({ text, attachments, isSender }) => {
         id={i}
         image={image}
         array={array}
+        text={text}
         extraImages={extraImages}
         isSender={isSender}
       />
@@ -52,7 +53,7 @@ const AttachmentGrid = ({ text, attachments, isSender }) => {
       className={classes.attachmentBubble}
     >
       {attachmentData}
-      {!!text && (
+      {!!text && attachments?.length === 1 && (
         <Grid item xs={12}>
           <Typography className={classes.text}>{text}</Typography>
         </Grid>

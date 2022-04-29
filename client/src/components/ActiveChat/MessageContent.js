@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
     margin: '0.5rem',
   },
   text: {
-    padding: '0.5rem',
+    padding: '0.5rem 0.75rem',
     fontSize: '0.9rem',
     color: (isSender) => (isSender ? '#91A3C0' : '#FFFFFF'),
     letterSpacing: -0.2,
@@ -20,6 +20,7 @@ const useStyles = makeStyles(() => ({
   textBubble: {
     maxWidth: '25%',
     width: 'fit-content',
+    marginBottom: '0.25rem',
     background: (isSender) =>
       isSender
         ? '#F0F5F9'
@@ -35,16 +36,17 @@ const MessageContent = ({ attachments, text, isSender }) => {
 
   return (
     <>
-      {!!attachments?.length ? (
+      {(attachments?.length > 1 || !attachments?.length) && !!text && (
+        <Box className={classes.textBubble}>
+          <Typography className={classes.text}>{text}</Typography>
+        </Box>
+      )}
+      {!!attachments?.length && (
         <AttachmentGrid
           text={text}
           attachments={attachments}
           isSender={isSender}
         />
-      ) : (
-        <Box className={classes.textBubble}>
-          <Typography className={classes.text}>{text}</Typography>
-        </Box>
       )}
     </>
   );
