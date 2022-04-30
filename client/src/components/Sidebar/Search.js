@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(() => ({
   filledInput: {
     height: 50,
-    background: '#E9EEF9',
+    backgroundColor: '#E4ECF6',
     borderRadius: 5,
     fontSize: 13,
     fontWeight: 'bold',
